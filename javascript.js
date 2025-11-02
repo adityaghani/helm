@@ -30,7 +30,7 @@
 // --- Logika Produk dan Keranjang (Dimodifikasi) ---
 // --------------------------------------------------
 
-// Data Produk (Kode asli Anda)
+// Data Produk (Data Anda)
 const products = [
   {title:'Spartan Helmet',price:'Rp 480.000.000',img:'https://w7.pngwing.com/pngs/492/828/png-transparent-leonidas-i-spartan-warrior-helmet-film-knight-helmet-sports-equipment-300-spartans-300-thumbnail.png'},
   {title:'Airsoft Helmet',price:'Rp 200.000',img:'https://img.lazcdn.com/g/p/66848aced7ccc068ae925b3623a74bed.jpg_720x720q80.jpg'},
@@ -53,15 +53,38 @@ const closeCartBtn = document.getElementById('closeCartBtn');
 const cartItemsList = document.getElementById('cartItemsList');
 const cartCount = document.getElementById('cartCount');
 
+// --- BARU: Ambil elemen Notifikasi Toast ---
+const toast = document.getElementById('toastNotification');
+
+// --- BARU: Fungsi untuk Notifikasi Profesional ---
+function showToast(message) {
+  if (!toast) return; // Hentikan jika elemen toast tidak ada
+  toast.textContent = message;
+  toast.classList.add("show");
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}
+
 // 3. Fungsi untuk menambahkan produk ke keranjang
 function addToCart(product) {
   // Menambahkan produk yang dipilih ke array 'cart'
   cart.push(product);
   
-  // Beri notifikasi sederhana (opsional)
-  alert(`${product.title} telah ditambahkan ke keranjang!`);
+  // --- DIMODIFIKASI: Mengganti alert() dengan showToast() ---
+  // (Menggunakan Bahasa Inggris seperti yang diminta sebelumnya)
+  showToast(`${product.title} has been added to cart.`);
   
   // Perbarui tampilan keranjang
+  updateCartDisplay();
+}
+
+// --- BARU: Fungsi untuk HAPUS (Delete) item dari keranjang ---
+function removeFromCart(index) {
+  // Hapus 1 item dari array 'cart' pada 'index' yang dipilih
+  cart.splice(index, 1);
+  
+  // Perbarui lagi tampilan keranjangnya
   updateCartDisplay();
 }
 
@@ -83,37 +106,45 @@ function updateCartDisplay() {
       return;
     }
 
-    // Loop melalui setiap item di keranjang dan buat elemen list
-    cart.forEach(item => {
+    // --- DIMODIFIKASI: Loop dengan 'index' untuk tombol delete ---
+    cart.forEach((item, index) => {
       const li = document.createElement('li');
-      // Tampilkan gambar, judul, dan harga
+      
+      // --- DIMODIFIKASI: Menambahkan tombol "Remove" (Delete) ---
       li.innerHTML = `
         <img src="${item.img}" alt="${item.title}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
-        <strong>${item.title}</strong> - ${item.price}
+        <strong style="flex: 1;">${item.title}</strong> 
+        <span style="margin-right: 10px;">${item.price}</span>
+        <button class="cart-remove" data-index="${index}">Remove</button>
       `;
       cartItemsList.appendChild(li);
+    });
+
+    // --- BARU: Tambahkan Event Listener untuk semua tombol "Remove" ---
+    cartItemsList.querySelectorAll('.cart-remove').forEach(button => {
+      button.addEventListener('click', (e) => {
+        // Ambil 'index' dari data-atribut tombol yang diklik
+        const indexToRemove = e.target.dataset.index;
+        removeFromCart(indexToRemove);
+      });
     });
   }
 }
 
-// 5. Event Listeners untuk Modal Keranjang
-// Pastikan elemen-elemennya ada sebelum menambahkan listener
+// 5. Event Listeners untuk Modal Keranjang (Kode asli Anda)
 if (viewCartBtn && cartModal) {
-  // Tampilkan modal saat tombol 'Lihat Keranjang' diklik
   viewCartBtn.addEventListener('click', () => {
     cartModal.style.display = 'block';
-    updateCartDisplay(); // Selalu update saat dibuka
+    updateCartDisplay();
   });
 }
 
 if (closeCartBtn && cartModal) {
-  // Sembunyikan modal saat tombol 'X' diklik
   closeCartBtn.addEventListener('click', () => {
     cartModal.style.display = 'none';
   });
 }
 
-// Sembunyikan modal saat mengklik di luar area konten modal
 window.addEventListener('click', (event) => {
   if (event.target == cartModal) {
     cartModal.style.display = 'none';
@@ -121,7 +152,7 @@ window.addEventListener('click', (event) => {
 });
 
 // --- Modifikasi Kode Rendering Produk Anda ---
-// Pastikan grid ada
+// (Kode asli Anda, tidak diubah)
 if (grid) {
   products.forEach(p => {
     const el = document.createElement('article');
@@ -136,16 +167,11 @@ if (grid) {
       </div>
     `;
 
-    // --- MODIFIKASI UTAMA DI SINI ---
-    // 1. Cari tombol 'Add' yang baru saja kita buat di dalam elemen 'el'
     const addButton = el.querySelector('.btn-add');
     
-    // 2. Tambahkan event listener ke tombol 'Add' tersebut
-    // Saat diklik, panggil fungsi addToCart dan kirim data produk 'p'
     addButton.addEventListener('click', () => {
       addToCart(p);
     });
-    // --- AKHIR MODIFIKASI ---
 
     grid.appendChild(el);
   });
