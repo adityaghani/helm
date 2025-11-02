@@ -1,552 +1,1087 @@
-/* --- ROOT VARIABLES & MODERN SETUP --- */
 :root {
+
   /* Variabel diatur di sini untuk Light Mode (default) */
+
   --accent: #0b5cff;
+
   --accent-light: #e7f0ff;
+
   --dark: #111;
+
   --muted: #666;
-  --bg: #f9f9f9;
+
+  --bg: #f9f9f9; /* Sedikit lebih lembut dari #fafafa */
+
   --bg-card: #ffffff;
+
   --border: #eeeeee;
 
+
+
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+
   --shadow-lg: 0 10px 40px rgba(11, 92, 255, 0.1);
 
+
+
   --transition-fast: all 0.2s ease;
+
   --transition-normal: all 0.4s cubic-bezier(.2, .9, .2, 1);
+
 }
 
-/* --- DARK MODE STYLES (Manual Toggle) --- */
-/* Variabel ini akan aktif ketika <body> memiliki class .dark-mode */
-body.dark-mode {
-  --accent: #3381ff;
-  --accent-light: #1a2c4d;
-  --dark: #f0f0f0;
-  --muted: #999;
-  --bg: #111111;
-  --bg-card: #1c1c1c;
-  --border: #333333;
 
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 10px 40px rgba(11, 92, 255, 0.15);
+
+/* --- DARK MODE VARIABLES --- */
+
+@media (prefers-color-scheme: dark) {
+
+  :root {
+
+    --accent: #3381ff;
+
+    --accent-light: #1a2c4d;
+
+    --dark: #f0f0f0;
+
+    --muted: #999;
+
+    --bg: #111111;
+
+    --bg-card: #1c1c1c;
+
+    --border: #333333;
+
+
+
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+    --shadow-lg: 0 10px 40px rgba(11, 92, 255, 0.15);
+
+  }
+
 }
+
+
 
 /* --- GLOBAL STYLES --- */
+
 * {
+
   box-sizing: border-box;
+
   margin: 0;
+
   padding: 0;
+
 }
+
+
 
 html {
+
   scroll-behavior: smooth;
+
 }
+
+
 
 body {
+
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
   margin: 0;
+
   background: var(--bg);
+
   color: var(--dark);
+
   line-height: 1.5;
+
   -webkit-font-smoothing: antialiased;
+
   -moz-osx-font-smoothing: grayscale;
+
   text-rendering: optimizeLegibility;
-  /* Transisi halus saat ganti tema */
-  transition: background 0.3s ease, color 0.3s ease;
+
 }
+
+
 
 /* --- CUSTOM SCROLLBAR (Modern touch) --- */
+
 ::-webkit-scrollbar {
+
   width: 8px;
+
 }
+
 ::-webkit-scrollbar-track {
+
   background: var(--bg);
+
 }
+
 ::-webkit-scrollbar-thumb {
+
   background-color: var(--accent);
+
   border-radius: 4px;
+
 }
+
 ::-webkit-scrollbar-thumb:hover {
+
   background-color: #0849d9;
+
 }
+
+
 
 /* --- HEADER (Glassmorphism) --- */
+
 header {
-  background: rgba(255, 255, 255, 0.8);
+
+  /* Ubah background menjadi semi-transparan untuk backdrop-filter */
+
+  background: rgba(255, 255, 255, 0.8); 
+
   box-shadow: var(--shadow-sm);
+
   position: sticky;
+
   top: 0;
+
   z-index: 20;
+
   backdrop-filter: blur(10px);
+
   -webkit-backdrop-filter: blur(10px);
+
   border-bottom: 1px solid var(--border);
+
   transition: var(--transition-fast);
+
 }
 
-/* Penyesuaian background header untuk Dark Mode manual */
-body.dark-mode header {
-  background: rgba(28, 28, 28, 0.8);
+
+
+/* Penyesuaian background header untuk Dark Mode */
+
+@media (prefers-color-scheme: dark) {
+
+  header {
+
+    background: rgba(28, 28, 28, 0.8);
+
+  }
+
 }
+
+
 
 .container {
+
   max-width: 1140px;
+
   margin: 0 auto;
+
   padding: 0 20px;
+
 }
+
+
 
 .topbar {
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   padding: 12px 0;
+
 }
+
+
 
 .brand {
+
   display: flex;
+
   gap: 12px;
+
   align-items: center;
+
   text-decoration: none;
+
   color: var(--dark);
+
 }
+
+
 
 .brand h1 {
+
   font-size: 18px;
+
   margin: 0;
+
 }
+
+
 
 nav ul {
+
   display: flex;
+
   gap: 18px;
+
   list-style: none;
+
   margin: 0;
+
   padding: 0;
+
 }
+
+
+
+/* Efek hover modern untuk navigasi */
 
 nav a {
+
   color: var(--muted);
+
   text-decoration: none;
+
   font-weight: 600;
+
   position: relative;
+
   padding-bottom: 4px;
+
   transition: var(--transition-fast);
+
 }
+
+
 
 nav a:hover {
+
   color: var(--accent);
+
 }
+
+
 
 nav a::after {
+
   content: '';
+
   position: absolute;
+
   bottom: 0;
+
   left: 0;
+
   width: 100%;
+
   height: 2px;
+
   background: var(--accent);
+
   transform: scaleX(0);
+
   transform-origin: right;
+
   transition: transform 0.3s ease-out;
+
 }
+
+
 
 nav a:hover::after {
+
   transform: scaleX(1);
+
   transform-origin: left;
+
 }
+
+
 
 .actions {
+
   display: flex;
+
   gap: 10px;
+
   align-items: center;
+
 }
+
+
 
 /* --- BUTTONS (Modern hover) --- */
+
 .btn {
+
   background: var(--accent);
+
   color: #fff;
+
   border: none;
+
   padding: 10px 16px;
+
   border-radius: 8px;
+
   cursor: pointer;
+
   font-weight: 600;
+
   transition: var(--transition-fast);
+
   box-shadow: var(--shadow-sm);
+
 }
+
+
 
 .btn:hover {
+
   background: #0849d9;
+
   transform: scale(1.05);
+
   box-shadow: var(--shadow-md);
+
 }
+
+
+
+/* Status fokus yang lebih jelas untuk aksesibilitas */
 
 .btn:focus-visible {
+
   outline: 2px solid var(--accent);
+
   outline-offset: 2px;
+
 }
 
-/* Style khusus untuk tombol toggle tema */
-#theme-toggle {
-  background: var(--bg-card);
-  color: var(--dark);
-  border: 1px solid var(--border);
-  width: 44px; /* Ukuran pas */
-  height: 44px;
-  padding: 8px;
-  font-size: 1.2rem; /* Memperbesar ikon */
-}
 
-#theme-toggle:hover {
-  background: var(--accent-light);
-  color: var(--accent);
-  transform: scale(1.05);
-}
 
 /* --- HERO SECTION --- */
+
 .hero {
+
   display: grid;
+
   grid-template-columns: 1fr 420px;
+
   gap: 24px;
+
   align-items: center;
+
   padding: 36px 0;
+
 }
+
+
 
 .hero-left h2 {
+
   font-size: 40px;
+
   margin: 0 0 12px;
+
   line-height: 1.2;
+
 }
+
+
 
 .hero-left p {
+
   color: var(--muted);
+
   margin: 0 0 18px;
+
   font-size: 1.1rem;
+
 }
+
+
 
 .hero-card {
+
   background: var(--bg-card);
+
   padding: 18px;
+
   border-radius: 12px;
-  box-shadow: var(--shadow-lg);
+
+  box-shadow: var(--shadow-lg); /* Bayangan lebih menonjol */
+
 }
+
+
 
 /* --- CAROUSEL (Modern controls) --- */
+
 .carousel {
+
   position: relative;
+
   overflow: hidden;
+
   border-radius: 12px;
+
 }
+
+
 
 .slides {
+
   display: flex;
+
+  /* Transisi lebih 'bouncy' dan modern */
+
   transition: transform 0.6s cubic-bezier(.2, .9, .2, 1);
+
 }
+
+
 
 .slide {
+
   min-width: 100%;
+
   height: 280px;
+
   background-size: cover;
+
   background-position: center;
-  background-color: #eee; /* Fallback */
+
 }
+
+
 
 .carousel-controls {
+
   position: absolute;
+
   left: 12px;
+
   right: 12px;
+
   top: 0;
+
   bottom: 0;
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
 }
+
+
 
 .control {
+
   background: rgba(255, 255, 255, 0.8);
+
   border-radius: 50%;
+
   width: 36px;
+
   height: 36px;
+
   display: grid;
+
   place-items: center;
+
   cursor: pointer;
+
   backdrop-filter: blur(5px);
+
   transition: var(--transition-fast);
+
   color: #333;
+
 }
+
+
 
 .control:hover {
+
   background: var(--accent);
+
   color: #fff;
+
   transform: scale(1.1);
+
 }
+
+
 
 /* --- PRODUCTS SECTION (Modern card) --- */
+
 .section {
+
   padding: 28px 0;
+
 }
+
+
 
 .section h3 {
+
   text-align: center;
+
   margin-bottom: 20px;
+
   font-size: 24px;
+
 }
+
+
 
 .grid {
+
   display: grid;
+
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
   gap: 18px;
+
 }
+
+
 
 .card {
+
   background: var(--bg-card);
+
   border-radius: 12px;
+
   padding: 12px;
+
   box-shadow: var(--shadow-md);
+
   display: flex;
+
   flex-direction: column;
+
   border: 1px solid var(--border);
+
   transition: var(--transition-normal);
-  overflow: hidden;
+
+  overflow: hidden; /* Penting untuk zoom gambar */
+
 }
+
+
 
 .card img {
+
   width: 100%;
+
   height: 160px;
+
   object-fit: cover;
+
   border-radius: 8px;
+
   transition: var(--transition-normal);
-  background-color: #eee; /* Fallback */
+
 }
+
+
 
 .card h4 {
+
   margin: 10px 0 6px;
+
   font-size: 16px;
+
 }
+
+
 
 .price {
+
   color: var(--accent);
+
   font-weight: 700;
+
 }
+
+
+
+/* Efek hover modern pada kartu */
 
 .card:hover {
+
   transform: translateY(-8px);
+
   box-shadow: var(--shadow-lg);
+
   border-color: var(--accent);
+
 }
+
+
 
 .card:hover img {
-  transform: scale(1.05);
+
+  transform: scale(1.05); /* Zoom gambar di dalam kartu */
+
 }
+
+
+
+
 
 /* --- CATEGORIES SECTION --- */
+
 .categories {
+
   display: flex;
+
   gap: 8px;
+
   flex-wrap: wrap;
+
   margin-top: 8px;
+
   justify-content: center;
+
 }
+
+
 
 .pill {
+
   background: var(--bg-card);
+
   padding: 8px 12px;
+
   border-radius: 999px;
+
   border: 1px solid var(--border);
+
   font-weight: 600;
+
   cursor: pointer;
+
   transition: var(--transition-fast);
+
 }
+
+
 
 .pill:hover {
+
   border-color: var(--accent);
+
   color: var(--accent);
+
   transform: scale(1.05);
+
   box-shadow: var(--shadow-sm);
+
 }
+
+
 
 /* --- NEWSLETTER (Animated Gradient) --- */
+
 .newsletter {
+
   background: linear-gradient(90deg, #0b5cff 0%, #00b4ff 100%);
-  background-size: 200% 200%;
+
+  background-size: 200% 200%; /* Untuk animasi */
+
   color: #fff;
+
   padding: 28px;
+
   border-radius: 12px;
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   margin-top: 40px;
+
   flex-wrap: wrap;
+
   gap: 12px;
+
   animation: gradient-flow 10s ease infinite;
+
 }
+
+
+
+/* Keyframe untuk animasi gradasi */
 
 @keyframes gradient-flow {
+
   0% { background-position: 0% 50%; }
+
   50% { background-position: 100% 50%; }
+
   100% { background-position: 0% 50%; }
+
 }
+
+
 
 .newsletter form {
+
   display: flex;
+
   gap: 8px;
+
   flex-wrap: wrap;
+
 }
+
+
 
 input[type=email] {
+
   padding: 10px 12px;
+
   border-radius: 8px;
+
   border: none;
+
   min-width: 220px;
-  background: #fff;
+
+  background: #fff; /* Pastikan background putih */
+
   color: var(--dark);
+
 }
+
+
 
 input[type=email]:focus {
+
   outline: none;
+
   box-shadow: 0 0 0 3px var(--accent);
+
 }
+
+
 
 /* --- FOOTER --- */
+
 footer {
+
   padding: 28px 0;
+
   color: var(--muted);
+
   border-top: 1px solid var(--border);
+
   margin-top: 40px;
+
 }
+
+
 
 .footer-grid {
+
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 18px;
+
 }
+
+
 
 .footer-grid h5 {
+
   margin-top: 0;
+
   margin-bottom: 10px;
+
   color: var(--dark);
+
 }
+
+
 
 .footer-grid ul {
+
   list-style: none;
+
   padding: 0;
+
   margin: 0;
+
 }
+
+
 
 .footer-grid li {
+
   margin-bottom: 6px;
+
 }
+
+
 
 .footer-grid a {
+
   text-decoration: none;
+
   color: var(--muted);
+
   transition: var(--transition-fast);
+
 }
+
+
 
 .footer-grid a:hover {
+
   color: var(--accent);
+
 }
+
+
 
 .socials {
+
   display: flex;
+
   gap: 8px;
+
   margin-top: 8px;
+
 }
+
+
 
 .socials a {
+
   width: 30px;
+
   height: 30px;
+
   display: grid;
+
   place-items: center;
+
   background: var(--bg-card);
+
   border-radius: 50%;
+
   box-shadow: var(--shadow-sm);
+
   color: var(--accent);
+
   text-decoration: none;
+
   font-weight: bold;
+
   transition: var(--transition-fast);
+
 }
+
+
 
 .socials a:hover {
+
   transform: scale(1.1);
+
   box-shadow: var(--shadow-md);
+
 }
+
+
 
 /* --- RESPONSIVE STYLES --- */
+
 @media (max-width: 900px) {
+
   .hero {
+
     grid-template-columns: 1fr;
+
   }
+
   .hero-left h2 {
+
     font-size: 28px;
+
   }
+
   .footer-grid {
+
     grid-template-columns: repeat(2, 1fr);
+
   }
+
 }
+
+
 
 @media (max-width: 520px) {
+
   nav ul {
-    display: none; /* Idealnya jadi burger menu */
+
+    display: none; /* Sebaiknya diganti dengan menu hamburger (burger menu) */
+
   }
+
   .container {
+
     padding: 0 14px;
+
   }
+
   .hero-left p {
+
     font-size: 14px;
+
   }
+
   .grid {
+
     grid-template-columns: repeat(2, 1fr);
+
   }
+
 }
+
+
 
 /* --- NOTIFIKASI (Modern Toast) --- */
+
 .toast {
-  visibility: hidden;
+
+  visibility: hidden;  
+
   opacity: 0;
+
   min-width: 250px;
-  background: rgba(28, 28, 28, 0.85);
+
+  /* Menggunakan backdrop-filter untuk tampilan modern */
+
+  background: rgba(28, 28, 28, 0.85); 
+
   backdrop-filter: blur(5px);
+
   -webkit-backdrop-filter: blur(5px);
+
   color: #fff;
+
   text-align: center;
+
   border-radius: 8px;
+
   padding: 16px;
+
   position: fixed;
+
   z-index: 2000;
+
   left: 50%;
+
   transform: translateX(-50%);
+
   bottom: 30px;
-  transition: all 0.5s cubic-bezier(.2, .9, .2, 1);
+
+  transition: all 0.5s cubic-bezier(.2, .9, .2, 1); /* Transisi lebih 'fluid' */
+
   box-shadow: var(--shadow-lg);
+
 }
+
+
 
 .toast.show {
+
   visibility: visible;
+
   opacity: 1;
+
   bottom: 50px;
+
 }
 
-/* Toast untuk Dark Mode manual */
-body.dark-mode .toast {
-  background: rgba(240, 240, 240, 0.85);
-  color: #111; /* Harus #111, bukan var(--dark) */
+
+
+/* Toast untuk Dark Mode */
+
+@media (prefers-color-scheme: dark) {
+
+  .toast {
+
+    /* Toast terang di background gelap */
+
+    background: rgba(240, 240, 240, 0.85); 
+
+    color: var(--dark);
+
+  }
+
 }
+
+
 
 /* --- TOMBOL REMOVE (Modern hover) --- */
+
 .cart-remove {
+
   background: none;
+
   border: none;
+
   color: #ff4d4d;
+
   font-size: 14px;
+
   cursor: pointer;
+
   padding: 0 5px;
+
   margin-left: 10px;
+
   font-weight: bold;
+
   transition: var(--transition-fast);
+
 }
 
+
+
 .cart-remove:hover {
-  text-decoration: none;
+
+  text-decoration: none; /* Hapus underline, ganti dengan scale */
+
   color: #ff1a1a;
+
   transform: scale(1.1);
+
 }
