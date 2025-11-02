@@ -1,23 +1,36 @@
-// Carousel
+// Carousel (Kode asli Anda, dengan sedikit pengaman)
 (function(){
   const slides = document.querySelector('.slides');
-  const total = document.querySelectorAll('.slide').length;
-  let idx = 0;
-  const prev = document.getElementById('prev');
-  const next = document.getElementById('next');
+  // Pastikan .slides ada sebelum melanjutkan
+  if (slides) {
+    const total = document.querySelectorAll('.slide').length;
+    let idx = 0;
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
 
-  function show(i){
-    idx = (i + total) % total;
-    slides.style.transform = `translateX(${ -idx * 100 }%)`;
+    function show(i){
+      if (total === 0) return; // Hindari error jika tidak ada slide
+      idx = (i + total) % total;
+      slides.style.transform = `translateX(${ -idx * 100 }%)`;
+    }
+
+    if (prev && next) {
+      prev.addEventListener('click', ()=>show(idx-1));
+      next.addEventListener('click', ()=>show(idx+1));
+    }
+    
+    // Pastikan total > 0 sebelum menjalankan interval
+    if (total > 0) {
+        setInterval(()=>show(idx+1),5000);
+    }
   }
-
-  prev.addEventListener('click', ()=>show(idx-1));
-  next.addEventListener('click', ()=>show(idx+1));
-
-  setInterval(()=>show(idx+1),5000);
 })();
 
-// Products
+// --------------------------------------------------
+// --- Logika Produk dan Keranjang (Dimodifikasi) ---
+// --------------------------------------------------
+
+// Data Produk (Kode asli Anda)
 const products = [
   {title:'Spartan Helmet',price:'Rp 480.000.000',img:'https://w7.pngwing.com/pngs/492/828/png-transparent-leonidas-i-spartan-warrior-helmet-film-knight-helmet-sports-equipment-300-spartans-300-thumbnail.png'},
   {title:'Airsoft Helmet',price:'Rp 200.000',img:'https://img.lazcdn.com/g/p/66848aced7ccc068ae925b3623a74bed.jpg_720x720q80.jpg'},
@@ -27,18 +40,116 @@ const products = [
   {title:'Visor Iridium',price:'$146',img:'https://images.unsplash.com/photo-1532634896-26909d0d4f14?auto=format&fit=crop&w=800&q=60'},
 ];
 
+// --- Bagian Baru: Logika Keranjang ---
+
+// 1. Variabel untuk menyimpan status keranjang
+let cart = [];
+
+// 2. Ambil elemen-elemen HTML yang kita perlukan
 const grid = document.getElementById('products');
-products.forEach(p=>{
-  const el = document.createElement('article');
-  el.className='card';
-  el.innerHTML = `
-    <img src="${p.img}" alt="${p.title}">
-    <h4>${p.title}</h4>
-    <div style="flex:1"></div>
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div class="price">${p.price}</div>
-      <button class="btn">Add</button>
-    </div>
-  `;
-  grid.appendChild(el);
+const viewCartBtn = document.getElementById('viewCartBtn');
+const cartModal = document.getElementById('cartModal');
+const closeCartBtn = document.getElementById('closeCartBtn');
+const cartItemsList = document.getElementById('cartItemsList');
+const cartCount = document.getElementById('cartCount');
+
+// 3. Fungsi untuk menambahkan produk ke keranjang
+function addToCart(product) {
+  // Menambahkan produk yang dipilih ke array 'cart'
+  cart.push(product);
+  
+  // Beri notifikasi sederhana (opsional)
+  alert(`${product.title} telah ditambahkan ke keranjang!`);
+  
+  // Perbarui tampilan keranjang
+  updateCartDisplay();
+}
+
+// 4. Fungsi untuk memperbarui tampilan keranjang (di modal dan tombol)
+function updateCartDisplay() {
+  // Update hitungan di tombol 'Lihat Keranjang'
+  if (cartCount) {
+    cartCount.textContent = cart.length;
+  }
+
+  // Pastikan elemen list keranjang ada
+  if (cartItemsList) {
+    // Kosongkan daftar di modal
+    cartItemsList.innerHTML = '';
+
+    // Jika keranjang kosong, tampilkan pesan
+    if (cart.length === 0) {
+      cartItemsList.innerHTML = '<li>Keranjang Anda masih kosong.</li>';
+      return;
+    }
+
+    // Loop melalui setiap item di keranjang dan buat elemen list
+    cart.forEach(item => {
+      const li = document.createElement('li');
+      // Tampilkan gambar, judul, dan harga
+      li.innerHTML = `
+        <img src="${item.img}" alt="${item.title}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+        <strong>${item.title}</strong> - ${item.price}
+      `;
+      cartItemsList.appendChild(li);
+    });
+  }
+}
+
+// 5. Event Listeners untuk Modal Keranjang
+// Pastikan elemen-elemennya ada sebelum menambahkan listener
+if (viewCartBtn && cartModal) {
+  // Tampilkan modal saat tombol 'Lihat Keranjang' diklik
+  viewCartBtn.addEventListener('click', () => {
+    cartModal.style.display = 'block';
+    updateCartDisplay(); // Selalu update saat dibuka
+  });
+}
+
+if (closeCartBtn && cartModal) {
+  // Sembunyikan modal saat tombol 'X' diklik
+  closeCartBtn.addEventListener('click', () => {
+    cartModal.style.display = 'none';
+  });
+}
+
+// Sembunyikan modal saat mengklik di luar area konten modal
+window.addEventListener('click', (event) => {
+  if (event.target == cartModal) {
+    cartModal.style.display = 'none';
+  }
 });
+
+// --- Modifikasi Kode Rendering Produk Anda ---
+// Pastikan grid ada
+if (grid) {
+  products.forEach(p => {
+    const el = document.createElement('article');
+    el.className = 'card';
+    el.innerHTML = `
+      <img src="${p.img}" alt="${p.title}">
+      <h4>${p.title}</h4>
+      <div style="flex:1"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="price">${p.price}</div>
+        <button class="btn btn-add">Add</button> 
+      </div>
+    `;
+
+    // --- MODIFIKASI UTAMA DI SINI ---
+    // 1. Cari tombol 'Add' yang baru saja kita buat di dalam elemen 'el'
+    const addButton = el.querySelector('.btn-add');
+    
+    // 2. Tambahkan event listener ke tombol 'Add' tersebut
+    // Saat diklik, panggil fungsi addToCart dan kirim data produk 'p'
+    addButton.addEventListener('click', () => {
+      addToCart(p);
+    });
+    // --- AKHIR MODIFIKASI ---
+
+    grid.appendChild(el);
+  });
+}
+
+// Panggil sekali di awal untuk memastikan hitungan keranjang 0
+updateCartDisplay();
