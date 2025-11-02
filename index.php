@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Toko Helm Arya</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header>
@@ -85,8 +85,8 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <strong>AGV Demo</strong>
-          <p style="color:var(--muted)">A static HTML/CSS/JS demo inspired by the AGV website layout.</p>
+          <strong>Toko Helm Arya</strong>
+          <p style="color:var(--muted)">haloo.</p>
         </div>
         <div>
           <strong>Customer</strong>
