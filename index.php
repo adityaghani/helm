@@ -39,10 +39,16 @@
         📋 Total Data Presensi: <?= $jumlah_data ?>
       </div>
 
-      <div class="text-center mt-3">
-        <a href="data_presensi.php" class="text-decoration-none">Lihat Data Presensi →</a>
-      </div>
-    </form>
+      ...
+  <div class="text-center mt-3">
+    <a href="data_presensi.php" class="text-decoration-none">Lihat Data Presensi →</a>
   </div>
+</form>
+</div>
+
+<!-- JS EXTERNAL -->
+<script src="assets/script.js"></script>
+
 </body>
 </html>
+
