@@ -53,14 +53,14 @@
     </section>
 
     <section class="section">
-      <h3>Picked for you</h3>
+      <h3>Spesial Untukmu</h3>
       <div class="grid" id="products">
-        <!-- product cards populated by JS -->
+
       </div>
     </section>
 
     <section class="section">
-      <h3>Discover by riding style</h3>
+      <h3>Kategori</h3>
       <div class="categories">
         <div class="pill">Racing</div>
         <div class="pill">Sport</div>
@@ -72,7 +72,7 @@
     <section class="section newsletter">
       <div>
         <h3>Join the community</h3>
-        <div>Complete your profile and get 15% off your next purchase.</div>
+        <div>Dapatkan Diskon 15% di Pembelian Berikutnya.</div>
       </div>
       <form id="newsletter" onsubmit="event.preventDefault();alert('Thanks!')">
         <input type="email" placeholder="Email address" required>
