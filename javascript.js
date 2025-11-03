@@ -32,16 +32,16 @@
 
 // Data Produk (Data Anda)
 const products = [
-  {title:'Spartan Helmet',price:'Rp 480.000.000',img:'https://w7.pngwing.com/pngs/492/828/png-transparent-leonidas-i-spartan-warrior-helmet-film-knight-helmet-sports-equipment-300-spartans-300-thumbnail.png'},
-  {title:'Airsoft Helmet',price:'Rp 200.000',img:'https://img.lazcdn.com/g/p/66848aced7ccc068ae925b3623a74bed.jpg_720x720q80.jpg'},
-  {title:'Helm Lpg',price:'Rp 400.000',img:'https://cf.shopee.co.id/file/id-11134201-7r98p-lr2tvsj1atjmc2'},
-  {title:'Safety Helmet',price:'Rp 100.000',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1tXUYkXoE_So70Qdq2MSaggpy4jnMZoulqg&s'},
-  {title:'Rescue Helmet',price:'Rp 1.500.000',img:'https://depotsafety.co.id/wp-content/uploads/2018/10/Helm-Pemadam-Kebakaran-MaxGuard.jpg'},
   {title:'Helm Fullface',price:'Rp 500.000',img:'https://blog.mofe.co.id/wp-content/uploads/2024/02/1-9-1536x864.jpg'},
   {title:'Helm Halfface',price:'Rp 200.000',img:'https://blog.mofe.co.id/wp-content/uploads/2024/02/2-9-1536x864.jpg'},
   {title:'Off-Road Helmet',price:'Rp 2.500.000',img:'https://blog.mofe.co.id/wp-content/uploads/2024/02/4-8-1536x864.jpg'},
   {title:'Racing Helmet',price:'Rp 18.000.000',img:'https://conquerhelmets.com/wp-content/uploads/2024/06/350-FF-SA20-BLK__01_fbcff5c7-8aa6-494b-b9e0-74f7985d6e53_1024x1024@2x.jpg'},
   {title:'Vintage Helmet',price:'Rp 1.700.000',img:'https://blog.mofe.co.id/wp-content/uploads/2024/02/15-1-1536x864.jpg'},
+  {title:'Spartan Helmet',price:'Rp 480.000.000',img:'https://w7.pngwing.com/pngs/492/828/png-transparent-leonidas-i-spartan-warrior-helmet-film-knight-helmet-sports-equipment-300-spartans-300-thumbnail.png'},
+  {title:'Airsoft Helmet',price:'Rp 200.000',img:'https://img.lazcdn.com/g/p/66848aced7ccc068ae925b3623a74bed.jpg_720x720q80.jpg'},
+  {title:'Helm Lpg',price:'Rp 400.000',img:'https://cf.shopee.co.id/file/id-11134201-7r98p-lr2tvsj1atjmc2'},
+  {title:'Safety Helmet',price:'Rp 100.000',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1tXUYkXoE_So70Qdq2MSaggpy4jnMZoulqg&s'},
+  {title:'Rescue Helmet',price:'Rp 1.500.000',img:'https://depotsafety.co.id/wp-content/uploads/2018/10/Helm-Pemadam-Kebakaran-MaxGuard.jpg'},
 ];
 
 // --- Bagian Baru: Logika Keranjang ---
