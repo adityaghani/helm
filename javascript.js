@@ -41,7 +41,7 @@ const products = [
   {title:'Airsoft Helmet',price:'Rp 200.000',img:'https://img.lazcdn.com/g/p/66848aced7ccc068ae925b3623a74bed.jpg_720x720q80.jpg'},
   {title:'Helm Lpg',price:'Rp 400.000',img:'https://cf.shopee.co.id/file/id-11134201-7r98p-lr2tvsj1atjmc2'},
   {title:'Safety Helmet',price:'Rp 100.000',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1tXUYkXoE_So70Qdq2MSaggpy4jnMZoulqg&s'},
-  {title:'Rescue Helmet',price:'Rp 1.500.000',img:'https://depotsafety.co.id/wp-content/uploads/2018/10/Helm-Pemadam-Kebakaran-MaxGuard.jpg'},
+  {title:'Scuba Helmet',price:'Rp 6.000.000',img:'https://m.media-amazon.com/images/I/81AO+fr9oUL._AC_SX679_.jpg'},
 ];
 
 // --- Bagian Baru: Logika Keranjang ---
