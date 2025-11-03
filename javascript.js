@@ -21,7 +21,7 @@
     
     // Pastikan total > 0 sebelum menjalankan interval
     if (total > 0) {
-        setInterval(()=>show(idx+1),5000);
+        setInterval(()=>show(idx+1),3500);
     }
   }
 })();
