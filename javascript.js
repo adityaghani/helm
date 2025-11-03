@@ -34,7 +34,7 @@
 const products = [
   {title:'Spartan Helmet',price:'Rp 480.000.000',img:'https://w7.pngwing.com/pngs/492/828/png-transparent-leonidas-i-spartan-warrior-helmet-film-knight-helmet-sports-equipment-300-spartans-300-thumbnail.png'},
   {title:'Airsoft Helmet',price:'Rp 200.000',img:'https://img.lazcdn.com/g/p/66848aced7ccc068ae925b3623a74bed.jpg_720x720q80.jpg'},
-  {title:'Helm Lpg',price:'Rp 400.000',img:'https://p16-images-sign-sg.tokopedia-static.net/tos-alisg-i-aphluv4xwc-sg/img/VqbcmM/2021/1/28/d3ff42f3-54bc-42d6-83ae-9b55aedd326a.jpg~tplv-aphluv4xwc-white-pad-v1:1600:1600.jpeg?lk3s=0ccea506&x-expires=1762110028&x-signature=9Jm3ot%2FdC3F520s9O8MogWsn2zM%3D&x-signature-webp=DjrO9PwcLLmYi03WUpFGiPvmziA%3D'},
+  {title:'Helm Lpg',price:'Rp 400.000',img:'https://cf.shopee.co.id/file/id-11134201-7r98p-lr2tvsj1atjmc2'},
   {title:'Safety Helmet',price:'Rp 100.000',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1tXUYkXoE_So70Qdq2MSaggpy4jnMZoulqg&s'},
   {title:'Rescue Helmet',price:'Rp 1.500.000',img:'https://depotsafety.co.id/wp-content/uploads/2018/10/Helm-Pemadam-Kebakaran-MaxGuard.jpg'},
   {title:'Helm Fullface',price:'Rp 500.000',img:'https://blog.mofe.co.id/wp-content/uploads/2024/02/1-9-1536x864.jpg'},
