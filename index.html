@@ -1,30 +1,34 @@
 <!doctype html>
-
 <html lang="id">
-
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Toko Helm Arya</title>
+  <link rel="stylesheet" href="css/style.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Toko Helm Arya</title>
   <link rel="stylesheet" href="css/style.css">
-
-  <meta charset="utf-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>Toko Helm Arya</title>
-
-  <link rel="stylesheet" href="css/style.css">
-
 </head>
-
 <body>
 
-
-
 <div id="toastNotification" class="toast"></div>
-
 <header>
+    <div class="container topbar">
+      <div class="brand"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36'><rect rx='6' width='36' height='36' fill='%230b5cff'/><text x='50%' y='55%' font-size='18' text-anchor='middle' fill='white' font-family='Arial'></text></svg>" alt="logo" width="36"><h1>Toko Helm Arya</h1></div>
+      <nav>
+        <ul>
+          <li><a href="#">Helmets</a></li>
+          <li><a href="#">Accessories</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+      <div class="actions">
+        <button class="btn">Wishlist</button>
+        <button class="btn" id="cartButton">Cart (<span id="cartCount">0</span>)</button>
+      </div>
+    </div>
+  </header>
     <div class="container topbar">
       <div class="brand"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36'><rect rx='6' width='36' height='36' fill='%230b5cff'/><text x='50%' y='55%' font-size='18' text-anchor='middle' fill='white' font-family='Arial'></text></svg>" alt="logo" width="36"><h1>Toko Helm Arya</h1></div>
       <nav>
@@ -42,6 +46,35 @@
     </div>
   </header>
 
+  <main class="container">
+    <section class="hero">
+      <div class="hero-left">
+        <h2>Performance. Safety. Style.</h2>
+        <p>Toko helm terjosjis</p>
+        <div class="hero-card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <strong>PISTA GP RR LIMITED</strong>
+              <div style="color:var(--muted);font-size:14px">Technical excellence and aesthetic research.</div>
+            </div>
+            <button class="btn">Buy now</button>
+          </div>
+        </div>
+      </div>
+      <div class="hero-card" style="padding:0">
+        <div class="carousel" aria-label="Hero carousel">
+          <div class="slides">
+            <div class="slide" style="background-image:url('https://rsvhelmets.co.id/cdn/shop/files/CLASSICBLACKGLOSSY1.jpg?v=1694433199&width=1946')"></div>
+            <div class="slide" style="background-image:url('https://www.lazone.id/storage/news/Februari_2023/28_Feb/Auto/helm-cover.jpg')"></div>
+            <div class="slide" style="background-image:url('https://deltaindo.co.id/wp-content/uploads/2025/04/Flux_Dev_Create_a_highly_realistic_image_of_7_safety_helmets_e_0.jpg')"></div>
+          </div>
+          <div class="carousel-controls">
+            <div class="control" id="prev">‹</div>
+            <div class="control" id="next">›</div>
+          </div>
+        </div>
+      </div>
+    </section>
   <main class="container">
     <section class="hero">
       <div class="hero-left">
@@ -72,6 +105,21 @@
       </div>
     </section>
 
+    <section class="section">
+      <h3>Picked for you</h3>
+      <div class="grid" id="products">
+        </div>
+    </section>
+    
+    <section class="section">
+      <h3>Kategori</h3>
+      <div class="categories">
+        <div class="pill">Stylish</div>
+        <div class="pill">Sporty</div>
+        <div class="pill">Safety</div>
+        <div class="pill">Modular</div>
+      </div>
+    </section>
     <section class="section">
       <h3>Picked for you</h3>
       <div class="grid" id="products">
@@ -88,6 +136,17 @@
       </div>
     </section>
 
+    <section class="section newsletter">
+      <div>
+        <h3>Join the community</h3>
+        <div>Dapatkan Diskon 15% di Pembelian Berikutnya.</div>
+      </div>
+      <form id="newsletter" onsubmit="event.preventDefault();alert('Thanks!')">
+        <input type="email" placeholder="Email address" required>
+        <button class="btn" type="submit">Subscribe</button>
+      </form>
+    </section>
+  </main>
     <section class="section newsletter">
       <div>
         <h3>Join the community</h3>
@@ -100,6 +159,15 @@
     </section>
   </main>
 
+  <div id="cartModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5);">
+    <div style="background-color: #fff; color: #000; margin: 10% auto; padding: 24px; border: 1px solid #888; width: 90%; max-width: 600px; border-radius: 8px;">
+      <span id="closeCartBtn" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+      <h2>Your Shopping Cart</h2>
+      <ul id="cartItemsList" style="list-style-type: none; padding: 0; max-height: 300px; overflow-y: auto;">
+        </ul>
+      <button class="btn" style="width: 100%; margin-top: 20px;">Checkout</button>
+    </div>
+  </div>
   <div id="cartModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5);">
     <div style="background-color: #fff; color: #000; margin: 10% auto; padding: 24px; border: 1px solid #888; width: 90%; max-width: 600px; border-radius: 8px;">
       <span id="closeCartBtn" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
@@ -110,6 +178,29 @@
     </div>
   </div>
 
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <strong>Toko Helm Arya</strong>
+          <p style="color:var(--muted)">haloo.</p>
+        </div>
+        <div>
+          <strong>Customer</strong>
+          <div style="color:var(--muted);font-size:14px">Contact<br>Track order<br>FAQ</div>
+        </div>
+        <div>
+          <strong>Products</strong>
+          <div style="color:var(--muted);font-size:14px">Helmets<br>Visors<br>Accessories</div>
+        </div>
+        <div>
+          <strong>Follow</strong>
+          <div class="socials"><span>Facebook</span><span>Instagram</span><span>Youtube</span></div>
+        </div>
+      </div>
+      <div style="margin-top:18px;color:var(--muted);font-size:13px">© Demo — not affiliated with AGV.</div>
+    </div>
+  </footer>
   <footer>
     <div class="container">
       <div class="footer-grid">
@@ -134,228 +225,8 @@
     </div>
   </footer>
 
+  <script src="javascript.js"></script>
   <script src="javascript.js"></script>
 
-    <div class="container topbar">
-
-      <div class="brand"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36'><rect rx='6' width='36' height='36' fill='%230b5cff'/><text x='50%' y='55%' font-size='18' text-anchor='middle' fill='white' font-family='Arial'></text></svg>" alt="logo" width="36"><h1>Toko Helm Arya</h1></div>
-
-      <nav>
-
-        <ul>
-
-          <li><a href="#">Helmets</a></li>
-
-          <li><a href="#">Accessories</a></li>
-
-          <li><a href="#">About</a></li>
-
-        </ul>
-
-      </nav>
-
-      <div class="actions">
-
-        <button class="btn">Wishlist</button>
-
-        <button class="btn" id="cartButton">Cart (<span id="cartCount">0</span>)</button>
-
-      </div>
-
-    </div>
-
-  </header>
-
-
-
-  <main class="container">
-
-    <section class="hero">
-
-      <div class="hero-left">
-
-        <h2>Performance. Safety. Style.</h2>
-
-        <p>Toko helm terjosjis</p>
-
-        <div class="hero-card">
-
-          <div style="display:flex;justify-content:space-between;align-items:center">
-
-            <div>
-
-              <strong>PISTA GP RR LIMITED</strong>
-
-              <div style="color:var(--muted);font-size:14px">Technical excellence and aesthetic research.</div>
-
-            </div>
-
-            <button class="btn">Buy now</button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="hero-card" style="padding:0">
-
-        <div class="carousel" aria-label="Hero carousel">
-
-          <div class="slides">
-
-            <div class="slide" style="background-image:url('https://rsvhelmets.co.id/cdn/shop/files/CLASSICBLACKGLOSSY1.jpg?v=1694433199&width=1946')"></div>
-
-            <div class="slide" style="background-image:url('https://www.lazone.id/storage/news/Februari_2023/28_Feb/Auto/helm-cover.jpg')"></div>
-
-            <div class="slide" style="background-image:url('https://deltaindo.co.id/wp-content/uploads/2025/04/Flux_Dev_Create_a_highly_realistic_image_of_7_safety_helmets_e_0.jpg')"></div>
-
-          </div>
-
-          <div class="carousel-controls">
-
-            <div class="control" id="prev">‹</div>
-
-            <div class="control" id="next">›</div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <section class="section">
-
-      <h3>Picked for you</h3>
-
-      <div class="grid" id="products">
-
-        </div>
-
-    </section>
-
-    
-
-    <section class="section">
-
-      <h3>Kategori</h3>
-
-      <div class="categories">
-
-        <div class="pill">Stylish</div>
-
-        <div class="pill">Sporty</div>
-
-        <div class="pill">Safety</div>
-
-        <div class="pill">Modular</div>
-
-      </div>
-
-    </section>
-
-
-
-    <section class="section newsletter">
-
-      <div>
-
-        <h3>Join the community</h3>
-
-        <div>Dapatkan Diskon 15% di Pembelian Berikutnya.</div>
-
-      </div>
-
-      <form id="newsletter" onsubmit="event.preventDefault();alert('Thanks!')">
-
-        <input type="email" placeholder="Email address" required>
-
-        <button class="btn" type="submit">Subscribe</button>
-
-      </form>
-
-    </section>
-
-  </main>
-
-
-
-  <div id="cartModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5);">
-
-    <div style="background-color: #fff; color: #000; margin: 10% auto; padding: 24px; border: 1px solid #888; width: 90%; max-width: 600px; border-radius: 8px;">
-
-      <span id="closeCartBtn" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
-
-      <h2>Your Shopping Cart</h2>
-
-      <ul id="cartItemsList" style="list-style-type: none; padding: 0; max-height: 300px; overflow-y: auto;">
-
-        </ul>
-
-      <button class="btn" style="width: 100%; margin-top: 20px;">Checkout</button>
-
-    </div>
-
-  </div>
-
-
-
-  <footer>
-
-    <div class="container">
-
-      <div class="footer-grid">
-
-        <div>
-
-          <strong>Toko Helm Arya</strong>
-
-          <p style="color:var(--muted)">haloo.</p>
-
-        </div>
-
-        <div>
-
-          <strong>Customer</strong>
-
-          <div style="color:var(--muted);font-size:14px">Contact<br>Track order<br>FAQ</div>
-
-        </div>
-
-        <div>
-
-          <strong>Products</strong>
-
-          <div style="color:var(--muted);font-size:14px">Helmets<br>Visors<br>Accessories</div>
-
-        </div>
-
-        <div>
-
-          <strong>Follow</strong>
-
-          <div class="socials"><span>Facebook</span><span>Instagram</span><span>Youtube</span></div>
-
-        </div>
-
-      </div>
-
-      <div style="margin-top:18px;color:var(--muted);font-size:13px">© Demo — not affiliated with AGV.</div>
-
-    </div>
-
-  </footer>
-
-
-
-  <script src="javascript.js"></script>
-
-
-
 </body>
-
 </html>
