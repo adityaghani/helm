@@ -1,247 +1,539 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="id">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toko Helm</title>
+  
+  <style>
+    /* 1. Pengaturan Dasar & Font */
+    :root {
+      --primary-color: #007bff;
+      --border-color: #ddd;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
 
-  <meta charset="utf-8">
+    html {
+      /* Efek scroll halus saat klik navigasi */
+      scroll-behavior: smooth;
+    }
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
 
-  <title>Toko Helm Arya</title>
+    /* 2. Navigasi & Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
 
-  <link rel="stylesheet" href="css/style.css">
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
 
+    nav a {
+      text-decoration: none;
+      color: #555;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
+    }
+
+    /* 3. Tombol (Umum) */
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    /* Tombol 'Add' di Kartu */
+    .btn-add {
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 0.9rem;
+    }
+    
+    #cartButton {
+      background-color: #28a745;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    #cartCount {
+      background-color: white;
+      color: #28a745;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+
+    /* 4. Carousel (Slider) */
+    .carousel-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 2rem auto;
+      overflow: hidden;
+      position: relative;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 400px; /* Sesuaikan tinggi carousel */
+      object-fit: cover;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, 0.7);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 1.5rem;
+      z-index: 10;
+    }
+
+    #prev { left: 10px; }
+    #next { right: 10px; }
+
+    /* 5. Konten Utama & Grid Produk */
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    main h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: #222;
+    }
+
+    .grid-container {
+      display: grid;
+      /* Membuat kolom responsif */
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* 6. Kartu Produk (Sesuai Gambar Anda) */
+    .card {
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px; /* Tinggi gambar seragam */
+      object-fit: cover; /* Agar gambar tidak gepeng */
+    }
+
+    .card h4 {
+      font-size: 1.1rem;
+      margin: 0.75rem 1rem 0.5rem;
+      color: #333;
+    }
+
+    .card .price {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    /* Wrapper untuk bagian bawah kartu */
+    .card > div {
+      padding: 0 1rem 1rem;
+      margin-top: auto; /* Mendorong bagian ini ke bawah */
+    }
+
+    /* 7. Modal Keranjang */
+    #cartModal {
+      display: none;
+      position: fixed;
+      z-index: 1001;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    #closeCartBtn {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #closeCartBtn:hover,
+    #closeCartBtn:focus {
+      color: black;
+    }
+    
+    #cartItemsList {
+      list-style: none;
+      padding: 0;
+    }
+    
+    /* Tombol remove di keranjang */
+    .cart-remove {
+      background-color: #dc3545;
+      color: white;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.8rem;
+    }
+
+    /* 8. Toast Notifikasi */
+    #toastNotification {
+      visibility: hidden;
+      opacity: 0;
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 8px;
+      z-index: 1002;
+      transition: opacity 0.3s, visibility 0.3s;
+      font-size: 0.9rem;
+    }
+
+    #toastNotification.show {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    /* 9. Section Tambahan */
+    section {
+      padding-top: 60px; /* Memberi jarak untuk anchor link */
+      min-height: 300px;
+    }
+    section h2 {
+      border-bottom: 2px solid var(--primary-color);
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    
+  </style>
 </head>
-
 <body>
 
-
-
-<div id="toastNotification" class="toast"></div>
-
-<header>
-
-    <div class="container topbar">
-
-      <div class="brand"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36'><rect rx='6' width='36' height='36' fill='%230b5cff'/><text x='50%' y='55%' font-size='18' text-anchor='middle' fill='white' font-family='Arial'></text></svg>" alt="logo" width="36"><h1>Toko Helm Arya</h1></div>
-
-      <nav>
-
-        <ul>
-
-          <li><a href="#">Helmets</a></li>
-
-          <li><a href="#">Accessories</a></li>
-
-          <li><a href="#">About</a></li>
-
-        </ul>
-
-      </nav>
-
-      <div class="actions">
-
-        <button class="btn">Wishlist</button>
-
-        <button class="btn" id="cartButton">Cart (<span id="cartCount">0</span>)</button>
-
-      </div>
-
+  <header>
+    <div class="logo">
+      <a href="#"><strong>LOGO</strong></a>
     </div>
-
+    <nav>
+      <ul>
+        <li><a href="#products">Helmets</a></li>
+        <li><a href="#accessories">Accessories</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+    <button id="cartButton" class="btn">
+      Lihat Keranjang
+      <span id="cartCount">0</span>
+    </button>
   </header>
 
+  <div class="carousel-container">
+    <div class="slides">
+      <img class="slide" src="https://images.unsplash.com/photo-1599420186946-7245103b4120?q=80&w=1470&auto=format&fit=crop" alt="Promo 1">
+      <img class="slide" src="https://images.unsplash.com/photo-1589708305370-6510a7c062f0?q=80&w=1470&auto=format&fit=crop" alt="Promo 2">
+      <img class="slide" src="https://images.unsplash.com/photo-1620247629592-1f48c0817f54?q=80&w=1470&auto=format&fit=crop" alt="Promo 3">
+    </div>
+    <button id="prev" class="carousel-btn">&#10094;</button>
+    <button id="next" class="carousel-btn">&#10095;</button>
+  </div>
 
-
-  <main class="container">
-
-    <section class="hero">
-
-      <div class="hero-left">
-
-        <h2>Performance. Safety. Style.</h2>
-
-        <p>Toko helm terjosjis</p>
-
-        <div class="hero-card">
-
-          <div style="display:flex;justify-content:space-between;align-items:center">
-
-            <div>
-
-              <strong>PISTA GP RR LIMITED</strong>
-
-              <div style="color:var(--muted);font-size:14px">Technical excellence and aesthetic research.</div>
-
-            </div>
-
-            <button class="btn">Buy now</button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="hero-card" style="padding:0">
-
-        <div class="carousel" aria-label="Hero carousel">
-
-          <div class="slides">
-
-            <div class="slide" style="background-image:url('https://www.lazone.id/storage/news/Februari_2023/28_Feb/Auto/helm-cover.jpg')"></div>
-
-            <div class="slide" style="background-image:url('https://deltaindo.co.id/wp-content/uploads/2025/04/Flux_Dev_Create_a_highly_realistic_image_of_7_safety_helmets_e_0.jpg')"></div>
-
-            <div class="slide" style="background-image:url('https://rsvhelmets.co.id/cdn/shop/files/CLASSICBLACKGLOSSY1.jpg?v=1694433199&width=1946')"></div>
-            
-          </div>
-
-          <div class="carousel-controls">
-
-            <div class="control" id="prev">‹</div>
-
-            <div class="control" id="next">›</div>
-
-          </div>
-
-        </div>
-
-      </div>
-
+  <main>
+    <section id="products">
+      <h2>Picked for you</h2>
+      <div id="products" class="grid-container"></div>
     </section>
 
-
-
-    <section class="section">
-
-      <h3>Picked for you</h3>
-
-      <div class="grid" id="products">
-
-        </div>
-
+    <section id="accessories">
+      <h2>Accessories</h2>
+      <p>Aksesoris helm akan segera hadir...</p>
     </section>
 
-    
-
-    <section class="section">
-
-      <h3>Kategori</h3>
-
-      <div class="categories">
-
-        <div class="pill">Stylish</div>
-
-        <div class="pill">Sporty</div>
-
-        <div class="pill">Safety</div>
-
-        <div class="pill">Modular</div>
-
-      </div>
-
+    <section id="about">
+      <h2>About Us</h2>
+      <p>Kami adalah toko helm terlengkap...</p>
     </section>
-
-
-
-    <section class="section newsletter">
-
-      <div>
-
-        <h3>Join the community</h3>
-
-        <div>Dapatkan Diskon 15% di Pembelian Berikutnya.</div>
-
-      </div>
-
-      <form id="newsletter" onsubmit="event.preventDefault();alert('Thanks!')">
-
-        <input type="email" placeholder="Email address" required>
-
-        <button class="btn" type="submit">Subscribe</button>
-
-      </form>
-
-    </section>
-
   </main>
 
-
-
-  <div id="cartModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5);">
-
-    <div style="background-color: #fff; color: #000; margin: 10% auto; padding: 24px; border: 1px solid #888; width: 90%; max-width: 600px; border-radius: 8px;">
-
-      <span id="closeCartBtn" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
-
-      <h2>Your Shopping Cart</h2>
-
-      <ul id="cartItemsList" style="list-style-type: none; padding: 0; max-height: 300px; overflow-y: auto;">
-
+  <div id="cartModal" class="modal">
+    <div class="modal-content">
+      <span id="closeCartBtn">&times;</span>
+      <h2>Keranjang Anda</h2>
+      <ul id="cartItemsList">
         </ul>
-
-      <button class="btn" style="width: 100%; margin-top: 20px;">Checkout</button>
-
     </div>
+  </div>
 
+  <div id="toastNotification">
+    Produk ditambahkan!
   </div>
 
 
+  <script>
+    // Carousel
+    (function() {
+      const slides = document.querySelector('.slides');
+      if (slides) {
+        const total = document.querySelectorAll('.slide').length;
+        let idx = 0;
+        const prev = document.getElementById('prev');
+        const next = document.getElementById('next');
 
-  <footer>
+        function show(i) {
+          if (total === 0) return; // Hindari error jika tidak ada slide
+          idx = (i + total) % total;
+          slides.style.transform = `translateX(${ -idx * 100 }%)`;
+        }
 
-    <div class="container">
+        if (prev && next) {
+          prev.addEventListener('click', () => show(idx - 1));
+          next.addEventListener('click', () => show(idx + 1));
+        }
 
-      <div class="footer-grid">
+        // Pastikan total > 0 sebelum menjalankan interval
+        if (total > 0) {
+          setInterval(() => show(idx + 1), 3500);
+        }
+      }
+    })();
 
-        <div>
+    // Data Produk
+    const products = [
+      {title:'Helm Fullface',price:'Rp 500.000',img:'https://blog.mofe.co.id/wp-content/uploads/2024/02/1-9-1536x864.jpg'},
+      {title:'Helm Halfface',price:'Rp 200.000',img:'https://blog.mofe.co.id/wp-content/uploads/2024/02/2-9-1536x864.jpg'},
+      {title:'Off-Road Helmet',price:'Rp 2.500.000',img:'https://blog.mofe.co.id/wp-content/uploads/2024/02/4-8-1536x864.jpg'},
+      {title:'Racing Helmet',price:'Rp 18.000.000',img:'https://conquerhelmets.com/wp-content/uploads/2024/06/350-FF-SA20-BLK__01_fbcff5c7-8aa6-494b-b9e0-74f7985d6e53_1024x1024@2x.jpg'},
+      {title:'Vintage Helmet',price:'Rp 1.700.000',img:'https://blog.mofe.co.id/wp-content/uploads/2024/02/15-1-1536x864.jpg'},
+      {title:'Spartan Helmet',price:'Rp 480.000.000',img:'https://w7.pngwing.com/pngs/492/828/png-transparent-leonidas-i-spartan-warrior-helmet-film-knight-helmet-sports-equipment-300-spartans-300-thumbnail.png'},
+      {title:'Airsoft Helmet',price:'Rp 200.000',img:'https://img.lazcdn.com/g/p/66848aced7ccc068ae925b3623a74bed.jpg_720x720q80.jpg'},
+      {title:'Helm Lpg',price:'Rp 400.000',img:'https://cf.shopee.co.id/file/id-11134201-7r98p-lr2tvsj1atjmc2'},
+      {title:'Safety Helmet',price:'Rp 100.000',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1tXUYkXoE_So70Qdq2MSaggpy4jnMZoulqg&s'},
+      {title:'Scuba Helmet',price:'Rp 6.000.000',img:'https://i.ebayimg.com/images/g/Eo4AAOSw4v1mSI1L/s-l1600.webp'},
+    ];
 
-          <strong>Toko Helm Arya</strong>
+    //1. Variabel untuk menyimpan status keranjang
+    let cart = [];
 
-          <p style="color:var(--muted)">Haloo.<br>Jual Helm Arya</p>
+    //2. Ambil elemen-elemen HTML yang kita perlukan
+    
+    // Perbaikan: Mengambil elemen 'grid-container'
+    const grid = document.querySelector('.grid-container'); 
 
-        </div>
+    const cartButton = document.getElementById('cartButton');
+    const cartModal = document.getElementById('cartModal');
+    const closeCartBtn = document.getElementById('closeCartBtn');
+    const cartItemsList = document.getElementById('cartItemsList');
+    const cartCount = document.getElementById('cartCount');
 
-        <div>
+    const toast = document.getElementById('toastNotification');
 
-          <strong>Contacts</strong>
+    function showToast(message) {
+      if (!toast) {
+        console.warn("Elemen toast notifikasi tidak ditemukan.");
+        return;
+      }
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
 
-          <div style="color:var(--muted);font-size:14px">Arya (0822-4222-7643)<br>Repis (0859-3447-7505)</div>
+    // 3. Fungsi untuk menambahkan produk ke keranjang
+    function addToCart(product) {
+      cart.push(product);
+      showToast(`${product.title} has been added to cart.`);
+      updateCartDisplay();
+    }
 
-        </div>
+    // Fungsi untuk HAPUS (Delete) item dari keranjang ---
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartDisplay();
+    }
 
-        <div>
+    // 4. Fungsi untuk memperbarui tampilan keranjang (di modal dan tombol)
+    function updateCartDisplay() {
+      // Update hitungan di tombol 'Lihat Keranjang'
+      if (cartCount) {
+        cartCount.textContent = cart.length;
+      }
 
-          <strong>Products</strong>
+      // Pastikan elemen list keranjang ada
+      if (cartItemsList) {
+        cartItemsList.innerHTML = '';
 
-          <div style="color:var(--muted);font-size:14px">Helmets<br>Accessories</div>
+        if (cart.length === 0) {
+          cartItemsList.innerHTML = '<li>Keranjang Anda masih kosong.</li>';
+          return;
+        }
 
-        </div>
+        cart.forEach((item, index) => {
+          const li = document.createElement('li');
 
-        <div>
+          // Menambahkan tombol "Remove" (Delete)
+          li.innerHTML = `
+            <img src="${item.img}" alt="${item.title}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+            <strong style="flex: 1;">${item.title}</strong> 
+            <span style="margin-right: 10px;">${item.price}</span>
+            <button class="btn cart-remove" data-index="${index}">Remove</button>
+          `;
+          // Menambahkan style agar item di keranjang rapi
+          li.style.display = 'flex';
+          li.style.alignItems = 'center';
+          li.style.justifyContent = 'space-between';
+          li.style.marginBottom = '10px';
+          li.style.borderBottom = '1px solid #eee';
+          li.style.paddingBottom = '5px';
 
-          <strong>Follow</strong>
+          cartItemsList.appendChild(li);
+        });
 
-          <div class="socials"><span>Facebook</span><span>Instagram</span><span>Youtube</span></div>
+        // Tambahkan Event Listener untuk semua tombol "Remove"
+        cartItemsList.querySelectorAll('.cart-remove').forEach(button => {
+          button.addEventListener('click', (e) => {
+            const indexToRemove = e.target.dataset.index;
+            removeFromCart(indexToRemove);
+          });
+        });
+      }
+    }
 
-        </div>
+    // 5. Event Listeners untuk Modal Keranjang
+    if (cartButton && cartModal) {
+      cartButton.addEventListener('click', () => {
+        cartModal.style.display = 'block';
+        updateCartDisplay(); // Selalu update saat dibuka
+      });
+    }
 
-      </div>
+    if (closeCartBtn && cartModal) {
+      closeCartBtn.addEventListener('click', () => {
+        cartModal.style.display = 'none';
+      });
+    }
 
-      <div style="margin-top:18px;color:var(--muted);font-size:13px">© Demo — Arya Adit Gerald.</div>
+    window.addEventListener('click', (event) => {
+      if (event.target == cartModal) {
+        cartModal.style.display = 'none';
+      }
+    });
 
-    </div>
+    // 6. Kode untuk Merender/Menampilkan Produk ke Halaman
+    if (grid) {
+      products.forEach(p => {
+        const el = document.createElement('article');
+        el.className = 'card';
+        el.innerHTML = `
+          <img src="${p.img}" alt="${p.title}">
+          <h4>${p.title}</h4>
+          
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div class="price">${p.price}</div>
+              <button class="btn btn-add">Add</button> 
+            </div>
+          </div>
+        `;
 
-  </footer>
+        const addButton = el.querySelector('.btn-add');
+        addButton.addEventListener('click', () => {
+          addToCart(p);
+        });
 
+        grid.appendChild(el);
+      });
+    }
 
+    // Panggil sekali di awal untuk memastikan hitungan keranjang 0
+    updateCartDisplay();
 
-  <script src="javascript.js"></script>
-
-
+  </script>
 
 </body>
-
 </html>
