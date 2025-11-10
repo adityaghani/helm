@@ -37,7 +37,7 @@ const products = [
   {title:'Spartan Helmet',price:'Rp 480.000.000',img:'https://w7.pngwing.com/pngs/492/828/png-transparent-leonidas-i-spartan-warrior-helmet-film-knight-helmet-sports-equipment-300-spartans-300-thumbnail.png'},
   {title:'Airsoft Helmet',price:'Rp 200.000',img:'https://img.lazcdn.com/g/p/66848aced7ccc068ae925b3623a74bed.jpg_720x720q80.jpg'},
   {title:'Helm Lpg',price:'Rp 400.000',img:'https://cf.shopee.co.id/file/id-11134201-7r98p-lr2tvsj1atjmc2'},
-  {title:'Safety Helmet',price:'Rp 100.000',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANdgcS1tXUYkXoE_So70Qdq2MSaggpy4jnMZoulqg&s'},
+  {title:'Safety Helmet',price:'Rp 100.000',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1tXUYkXoE_So70Qdq2MSaggpy4jnMZoulqg&s'},
   {title:'Scuba Helmet',price:'Rp 6.000.000',img:'https://i.ebayimg.com/images/g/Eo4AAOSw4v1mSI1L/s-l1600.webp'},
 ];
 
